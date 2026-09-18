@@ -1,0 +1,113 @@
+#include <iostream>
+using namespace std;
+#include <string>
+struct Node {
+char data;
+Node* link;
+Node(char c) :data(c), link(nullptr) {}
+};
+class test {
+private:
+Node* head;
+Node* end;
+public:
+test() {
+head = nullptr;
+end = nullptr;
+}
+bool isvowel(char c) {
+char l=tolower(c);
+if (l == 'a' || l == 'e' || l == 'o' || l == 'i' || l == 'u'||l=='y')
+return true;
+else
+return false;
+}
+bool startvowel() {
+char l=tolower(head->data);
+if(isvowel(l))
+return true;
+else
+return false;
+}
+bool havevowel(string &s) {
+bool flag = false;
+for(char c:s) {
+char l=tolower(c);
+if(isvowel(l)) {
+flag = true;
+}
+}
+return flag;
+}
+test insert(string & s){
+test list1;
+for(char c:s){
+Node* ptr=new Node(c);
+if(head == nullptr){
+head=ptr;
+end=head;
+}
+else{
+end->link=ptr;
+end=ptr;
+}
+}
+return list1;
+}
+bool isEmpty(){
+if(head==NULL)
+return true;
+else
+return false;
+}
+void swaps(){
+if(isEmpty()) return ;
+Node* temp=head;
+while(temp->link != NULL)
+temp=temp->link;
+if (head != NULL && !isvowel(head->data)) {
+Node* ptr = new Node('-');
+ptr->link = head;
+head = ptr;
+}
+while (head != NULL && !isvowel(head->data)) {
+Node* first=head;
+head=head->link;
+first->link=NULL;
+temp->link=first;
+temp = first;
+}
+}
+string convert() {
+string result;
+Node* ptr = head;
+while (ptr)
+{
+result += ptr->data;
+ptr = ptr->link;
+}
+return result;
+}
+string topig(string &s){
+if (s.empty()) return s;
+test list1;
+list1.insert(s);
+if(list1.startvowel() || !havevowel(s)){
+return s + "-way";
+}
+else if(!list1.startvowel() && havevowel(s)){
+list1.swaps();
+string str= list1.convert() + "ay";
+return str;
+}
+}
+};
+int main(){
+string s;
+cout<<"enter a string"<<endl;
+getline(cin,s);
+test obj;
+s = obj.topig(s);
+cout<<s;
+return 0;
+}
