@@ -1,0 +1,102 @@
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+using namespace std;
+
+const int l = 8;
+
+class test {
+private:
+	string arr[l][l];
+
+public:
+
+	test() {
+		
+	clear();
+		
+
+	}
+void clear() {
+        for (int t = 0; t < l; t++) {
+            for (int f = 0; f < l; f++) {
+                arr[t][f] = ".";
+            }
+        }
+    }
+
+
+	bool islegal(int ro, int co) {
+
+		for (int t = 0; t < co; t++) {
+			if (arr[ro][t] == "Q") return false;
+		}
+
+
+		for (int t = ro, f = co; t >= 0 && f >= 0; t--, f--) {
+			if (arr[t][f] == "Q") return false;
+		}
+
+
+		for (int t = ro, f = co; t < l && f >= 0; t++, f--) {
+			if (arr[t][f] == "Q") return false;
+		}
+
+		return true;
+	}
+
+
+	bool insert(int cl) {
+		if (cl >= l) {
+			return true;
+		}
+
+		for (int y = 0; y < l; y++) {
+			int ro=rand()%l;
+			if (islegal(ro, cl)) {
+				arr[ro][cl] = "Q";
+
+
+				if (insert(cl + 1)) {
+					return true;
+				}
+
+
+				arr[ro][cl] = ".";
+			}
+		}
+
+		return false;
+	}
+
+
+	void display() {
+		for (int y = 0; y < l; y++) {
+			for (int h = 0; h < l; h++) {
+				cout << arr[y][h] << " ";
+			}
+			cout << endl;
+		}
+	}
+	
+};
+
+int main() {
+   
+	int c=0;
+	test obj;
+	srand(time(0));
+cout<<"Hello, This Program Is Presented To You The 8-Queen Puzzle Using Recursion "<<endl;
+cout<<"For Example:"<<endl;
+while(c!=-1){
+     if (obj.insert(0)) {
+        obj.display(); 
+     } else {
+        cout << "No solution found!" << endl;
+     }
+     obj.clear();
+     cout<<"If You Want To Stop Enter -1 Any Key Else To Continue"<<endl;
+     cin>>c;
+}
+	return 0;
+}
