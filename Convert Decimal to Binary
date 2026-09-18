@@ -1,0 +1,23 @@
+#include <iostream>
+using namespace std;
+int convert(int d){
+    if (d == 0) {
+        return 0;  
+    } else {
+        int rem=d%2;
+        return rem + 10 * convert(d / 2);
+    }
+    
+}
+int main()
+{
+    int num;
+cout<<"Hello, This Program Convert Decimal Number To Binary\nEnter a Number You Want To Convert"<<endl;
+cin>>num;
+while(num!=-1){
+    cout<<"Number "<<num<<" In Binary is: "<<convert(num)<<endl;
+    cout<<"if you want to exit enter -1 any key else to continue"<<endl;
+    cin>>num;
+}
+    return 0;
+}
